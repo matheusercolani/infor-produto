@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Faróis Como Novos — Fature até R$ 2.400/mês restaurando faróis | Garagem Detail</title>
+<meta name="description" content="Aprenda a restaurar faróis e fature de R$150 a R$400 por carro, com menos de R$200 de material. A porta de entrada mais barata da estética automotiva. Acesso por R$19,90." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     DESIGN TOKENS — Garagem Detail / Faróis Como Novos
+     ============================================================ */
+  :root {
+    --brand-red: hsl(0, 98%, 62%);
+    --brand-red-dark: hsl(0, 95%, 45%);
+    --brand-red-negative: hsl(0, 84%, 60%);
+    --primary: hsl(0, 98%, 62%);
+    --primary-foreground: hsl(0, 0%, 100%);
+
+    --background: hsl(220, 7%, 95%);
+    --brand-charcoal-dark: hsl(220, 10%, 11%);
+    --brand-charcoal: hsl(222, 11%, 16%);
+    --brand-charcoal-darkest: hsl(220, 15%, 6%);
+    --card: hsl(0, 0%, 100%);
+
+    --foreground: hsl(222, 11%, 16%);
+    --muted-foreground: hsl(249, 3%, 49%);
+    --brand-text-secondary-dark: hsl(240, 3%, 63%);
+
+    --brand-green: hsl(142, 71%, 45%);
+    --brand-star: hsl(38, 92%, 50%);
+    --border: hsl(0, 0%, 82%);
+    --muted: hsl(0, 0%, 90%);
+    --radius: 0.5rem;
+
+    --content-max: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+  svg { display: block; }
+
+  /* LAYOUT */
+  .container { width: 100%; max-width: var(--content-max); margin: 0 auto; padding: 0 20px; }
+  .section { padding: 72px 0; }
+  .section-light { background: var(--background); color: var(--foreground); }
+  .section-dark { background: var(--brand-charcoal-dark); color: #fff; }
+  .section-darkest { background: var(--brand-charcoal-darkest); color: #fff; }
+  .text-center { text-align: center; }
+
+  .eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand-red); margin-bottom: 16px; }
+
+  h1, h2, h3 { font-weight: 700; line-height: 1.15; }
+  .h2 { font-size: 34px; margin-bottom: 16px; }
+  .lead { font-size: 18px; color: var(--muted-foreground); }
+  .section-dark .lead, .section-darkest .lead { color: var(--brand-text-secondary-dark); }
+  .highlight { color: var(--brand-red); }
+  .sec-head { max-width: 740px; margin: 0 auto; }
+
+  /* CTA */
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: inherit; font-weight: 700; font-size: 18px; color: #fff;
+    background: linear-gradient(135deg, hsl(0, 98%, 62%), hsl(0, 95%, 45%));
+    border: none; border-radius: var(--radius); padding: 18px 36px; cursor: pointer;
+    box-shadow: 0 10px 30px rgba(253, 63, 63, 0.4);
+    transition: transform .2s ease, box-shadow .2s ease; text-align: center; line-height: 1.25;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(253, 63, 63, 0.6); }
+  .cta-lg { font-size: 20px; padding: 22px 44px; width: 100%; max-width: 480px; }
+  .cta-sub { font-size: 13px; color: var(--muted-foreground); margin-top: 12px; }
+  .section-dark .cta-sub, .section-darkest .cta-sub { color: var(--brand-text-secondary-dark); }
+  .pulse { animation: pulse 2.4s infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 10px 30px rgba(253, 63, 63, 0.4); }
+    50% { box-shadow: 0 10px 44px rgba(253, 63, 63, 0.7); }
+    100% { box-shadow: 0 10px 30px rgba(253, 63, 63, 0.4); }
+  }
+
+  /* TOPBAR */
+  .topbar { background: linear-gradient(135deg, hsl(0, 98%, 62%), hsl(0, 95%, 45%)); color: #fff; text-align: center; font-size: 14px; font-weight: 600; padding: 10px 16px; }
+  .topbar strong { font-weight: 800; }
+
+  /* HERO */
+  .hero { background: var(--brand-charcoal-darkest); color: #fff; padding: 60px 0 72px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: 44px; margin-bottom: 20px; }
+  .hero p.lead { color: var(--brand-text-secondary-dark); font-size: 19px; margin-bottom: 28px; }
+  .hero .stars { margin-bottom: 18px; }
+
+  .hero-values { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 26px; }
+  .hval { display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px 18px; }
+  .hval strong { display: block; font-size: 14.5px; color: #fff; line-height: 1.3; }
+  .hval span { display: block; font-size: 13px; color: var(--brand-text-secondary-dark); margin-top: 2px; }
+
+  /* visual antes/depois */
+  .hero-visual { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 14px; box-shadow: 0 30px 60px rgba(0,0,0,0.45); }
+  .ba-figure { border-radius: 12px; overflow: hidden; position: relative; }
+  .ba-split { display: grid; grid-template-columns: 1fr 1fr; }
+  .ba-side { height: 280px; position: relative; display: flex; align-items: flex-end; justify-content: center; padding: 14px; }
+  .ba-before { background: radial-gradient(circle at 50% 40%, #b7a98f 0%, #6f6750 55%, #3a3527 100%); }
+  .ba-after  { background: radial-gradient(circle at 50% 40%, #eaf6ff 0%, #9fd4ff 45%, #2f8fd6 100%); }
+  .ba-label { position: absolute; top: 12px; left: 12px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+  .ba-before .ba-label { background: rgba(0,0,0,0.45); color: #ffd9a0; }
+  .ba-after .ba-label  { background: rgba(255,255,255,0.85); color: #0c5a96; }
+  .ba-headlamp { width: 86px; height: 86px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.25); box-shadow: 0 0 24px rgba(255,255,255,0.15) inset; }
+  .ba-before .ba-headlamp { background: rgba(120,108,80,0.55); filter: blur(1px); }
+  .ba-after .ba-headlamp { background: rgba(255,255,255,0.55); box-shadow: 0 0 30px rgba(255,255,255,0.9); }
+  .ba-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--brand-red); transform: translateX(-50%); }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+  .glass-stat { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .glass-stat .num { font-size: 20px; font-weight: 800; color: #fff; }
+  .glass-stat .lab { font-size: 11px; color: var(--brand-text-secondary-dark); margin-top: 2px; }
+
+  /* STARS */
+  .stars { display: inline-flex; align-items: center; gap: 8px; }
+  .stars .icons { display: inline-flex; gap: 2px; color: var(--brand-star); }
+  .stars .label { font-size: 14px; color: var(--brand-text-secondary-dark); }
+  .section-light .stars .label { color: var(--muted-foreground); }
+
+  /* ICON CHIP */
+  .ic-chip { width: 46px; height: 46px; border-radius: 10px; display: grid; place-items: center; background: rgba(253,63,63,0.12); color: var(--brand-red); margin-bottom: 16px; }
+  .ic-chip svg { width: 24px; height: 24px; }
+
+  /* check / x marks */
+  .mk { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; }
+  .mk-check { color: var(--brand-green); }
+  .mk-x { color: var(--brand-red-negative); }
+
+  /* OPPORTUNITY GRID */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  .op-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 28px; }
+  .op-card h3 { font-size: 18px; margin-bottom: 8px; }
+  .op-card p { font-size: 14.5px; color: var(--brand-text-secondary-dark); }
+
+  /* MATH / MARGIN */
+  .math { max-width: 820px; margin: 36px auto 0; background: linear-gradient(rgb(42, 45, 53), rgb(31, 33, 40)); border: 1px solid rgba(253,63,63,0.4); border-radius: 18px; padding: 36px; color: #fff; }
+  .math-row { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .math-row:last-of-type { border-bottom: none; }
+  .math-row .lbl { font-size: 15px; color: #e7e7ea; }
+  .math-row .lbl small { display: block; font-size: 12.5px; color: var(--brand-text-secondary-dark); margin-top: 2px; }
+  .math-row .val { font-size: 20px; font-weight: 800; white-space: nowrap; }
+  .val-out { color: var(--brand-red-negative); }
+  .val-in { color: var(--brand-green); }
+  .math-total { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 20px; border-top: 2px solid rgba(253,63,63,0.4); }
+  .math-total .lbl { font-size: 17px; font-weight: 700; }
+  .math-total .val { font-size: 30px; font-weight: 800; color: var(--brand-green); }
+
+  /* MODULES */
+  .modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 40px; }
+  .module { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; gap: 16px; box-shadow: rgba(0,0,0,0.05) 0px 1px 2px; }
+  .module .n { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; font-weight: 800; color: #fff; background: linear-gradient(135deg, hsl(0,98%,62%), hsl(0,95%,45%)); }
+  .module h3 { font-size: 17px; margin-bottom: 6px; }
+  .module p { font-size: 14px; color: var(--muted-foreground); }
+
+  /* WHO */
+  .who { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 36px; }
+  .who-card { border-radius: 16px; padding: 30px; background: var(--card); border: 1px solid var(--border); box-shadow: rgba(0,0,0,0.05) 0px 1px 2px; }
+  .who-card h3 { font-size: 19px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .who-list { list-style: none; display: grid; gap: 13px; }
+  .who-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--foreground); }
+
+  /* BONUS */
+  .bonus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+  .bonus-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 26px; position: relative; }
+  .bonus-tag { position: absolute; top: -11px; left: 24px; background: var(--brand-red); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+  .bonus-card h3 { font-size: 17px; margin: 8px 0 8px; }
+  .bonus-card p { font-size: 14px; color: var(--brand-text-secondary-dark); }
+  .bonus-card .val { font-size: 13px; font-weight: 700; color: var(--brand-green); margin-top: 12px; }
+
+  /* REVIEWS */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .review { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: rgba(0,0,0,0.05) 0px 1px 2px; }
+  .review p { font-size: 14.5px; margin: 12px 0 18px; }
+  .review .who-line { display: flex; align-items: center; gap: 12px; }
+  .review .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #2f8fd6, #1a1c20); display:grid; place-items:center; color:#fff; font-weight:700; font-size: 15px; }
+  .review .meta strong { display: block; font-size: 14px; }
+  .review .meta span { font-size: 12.5px; color: var(--muted-foreground); }
+
+  /* OFFER */
+  .offer-card { max-width: 560px; margin: 40px auto 0; background: linear-gradient(rgb(42, 45, 53), rgb(31, 33, 40)); border: 1px solid rgba(253,63,63,0.45); border-radius: 20px; padding: 40px 34px; text-align: center; color: #fff; box-shadow: 0 30px 70px rgba(0,0,0,0.5); }
+  .offer-card .ribbon { display:inline-block; background: rgba(253,63,63,0.15); color: var(--brand-red); border:1px solid rgba(253,63,63,0.4); font-size: 12px; font-weight: 700; letter-spacing:.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 20px; }
+  .offer-includes { list-style: none; display: grid; gap: 11px; text-align: left; max-width: 390px; margin: 0 auto 26px; }
+  .offer-includes li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; color: #e7e7ea; }
+  .price-from { color: var(--brand-text-secondary-dark); font-size: 15px; }
+  .price-from s { color: var(--brand-red-negative); }
+  .price-big { font-size: 56px; font-weight: 800; line-height: 1; margin: 6px 0 4px; }
+  .price-big .cents { font-size: 26px; vertical-align: super; }
+  .price-big .currency { font-size: 24px; vertical-align: super; margin-right: 2px; }
+  .price-installment { font-size: 14px; color: var(--brand-text-secondary-dark); margin-bottom: 24px; }
+  .secure-row { display:flex; flex-wrap: wrap; justify-content:center; gap: 18px; margin-top: 18px; }
+  .secure-row span { display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color: var(--brand-text-secondary-dark); }
+  .secure-row svg { width: 15px; height: 15px; }
+
+  /* GUARANTEE */
+  .guarantee { display: grid; grid-template-columns: 120px 1fr; gap: 26px; align-items: center; max-width: 760px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 30px; box-shadow: rgba(0,0,0,0.05) 0px 1px 2px; }
+  .guarantee .seal { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 50% 40%, #fff, #f1f2f3); border: 3px solid var(--brand-green); display: grid; place-items: center; text-align:center; }
+  .guarantee .seal .big { font-size: 30px; font-weight: 800; color: var(--brand-green); line-height: 1; }
+  .guarantee .seal .small { font-size: 11px; font-weight: 700; color: var(--foreground); text-transform: uppercase; letter-spacing: .06em; }
+  .guarantee h3 { font-size: 21px; margin-bottom: 8px; }
+  .guarantee p { font-size: 15px; color: var(--muted-foreground); }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 36px auto 0; display: grid; gap: 12px; }
+  .faq details { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 4px 22px; box-shadow: rgba(0,0,0,0.05) 0px 1px 2px; }
+  .faq summary { list-style: none; cursor: pointer; font-weight: 600; font-size: 16px; padding: 18px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary .plus { flex: 0 0 auto; width: 24px; height: 24px; border-radius: 6px; background: rgba(253,63,63,0.1); color: var(--brand-red); display: grid; place-items: center; font-weight: 700; transition: transform .2s; }
+  .faq details[open] summary .plus { transform: rotate(45deg); }
+  .faq details p { font-size: 14.5px; color: var(--muted-foreground); padding: 0 0 20px; }
+
+  /* FOOTER */
+  .footer { background: var(--brand-charcoal-darkest); color: var(--brand-text-secondary-dark); padding: 48px 0 40px; font-size: 13px; }
+  .footer .brand { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+  .footer .brand span { color: var(--brand-red); }
+  .footer p { max-width: 680px; margin-bottom: 12px; line-height: 1.7; }
+  .footer hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 24px 0; }
+  .footer a { color: #cfcfd4; }
+
+  /* RESPONSIVE */
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+    .grid-3, .bonus, .reviews { grid-template-columns: 1fr; }
+    .modules, .who { grid-template-columns: 1fr; }
+    .guarantee { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .section { padding: 52px 0; }
+    .hero h1 { font-size: 28px; }
+    .h2 { font-size: 24px; }
+    .lead, .hero p.lead { font-size: 16px; }
+    .price-big { font-size: 46px; }
+    .ba-side { height: 200px; }
+    .cta-lg { font-size: 18px; padding: 18px 24px; }
+    .hero-values { grid-template-columns: 1fr; }
+    .math { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== TOP BAR ===================== -->
+<div class="topbar">
+  Oferta de lançamento: de <s>R$197</s> por <strong>R$19,90</strong>. Acesso na hora e pra sempre.
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="stars">
+          <span class="icons" aria-hidden="true">★★★★★</span>
+          <span class="label">4,9/5 — mais de 3.200 alunos já fazendo o serviço</span>
+        </div>
+        <h1>Fature até <span class="highlight">R$ 2.400 por mês</span> restaurando faróis em <span class="highlight">40 minutos por carro</span>, começando do zero e sem precisar de ponto fixo</h1>
+        <p class="lead">Você aprende a técnica inteira no vídeo e transforma <strong style="color:#fff">menos de R$200</strong> de material num serviço que se cobra de <strong style="color:#fff">R$150 a R$400</strong>. É a forma mais barata de entrar na estética automotiva e já sair atendendo.</p>
+        <a href="#oferta" class="cta cta-lg pulse">QUERO COMEÇAR A FATURAR →</a>
+        <div class="cta-sub">Acesso imediato. Garantia de 7 dias. Pix ou cartão.</div>
+        <div class="hero-values">
+          <div class="hval">
+            <svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+            <div><strong>Menos de R$200</strong><span>de material, e dá pra vários carros</span></div>
+          </div>
+          <div class="hval">
+            <svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+            <div><strong>R$150 a R$400</strong><span>é quanto se cobra por carro</span></div>
+          </div>
+          <div class="hval">
+            <svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+            <div><strong>R$ 2.400 no mês</strong><span>com só 2 carros por semana</span></div>
+          </div>
+          <div class="hval">
+            <svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
+            <div><strong>Cliente que volta</strong><span>e ainda pede lavagem e polimento</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="hero-visual">
+          <div class="ba-figure">
+            <div class="ba-split">
+              <div class="ba-side ba-before"><span class="ba-label">Antes</span><div class="ba-headlamp"></div></div>
+              <div class="ba-side ba-after"><span class="ba-label">Depois</span><div class="ba-headlamp"></div></div>
+            </div>
+            <div class="ba-divider"></div>
+          </div>
+          <div class="hero-stats">
+            <div class="glass-stat"><div class="num">40 min</div><div class="lab">por carro</div></div>
+            <div class="glass-stat"><div class="num">R$ 150+</div><div class="lab">por serviço</div></div>
+            <div class="glass-stat"><div class="num">+3.200</div><div class="lab">alunos</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== OPORTUNIDADE ===================== -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Repara só</span>
+      <h2 class="h2">Você passa por <span class="highlight">dezenas de faróis amarelados</span> todo dia. Cada um deles é dinheiro na mesa.</h2>
+      <p class="lead">Olha o estacionamento do seu trabalho, a rua do seu bairro, o sinal vermelho. Metade dos carros tem o farol fosco. O dono sabe que tá feio, mas não sabe resolver, e quase ninguém oferece esse serviço por perto.</p>
+    </div>
+    <div class="grid-3">
+      <div class="op-card">
+        <div class="ic-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h2l1.5-4.5A2 2 0 0 1 8.4 11h7.2a2 2 0 0 1 1.9 1.5L19 17h2"/><path d="M5 17v2M19 17v2"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg>
+        </div>
+        <h3>Cliente é o que não falta</h3>
+        <p>Carro com farol opaco tem em todo lugar. A demanda já existe, pronta. Você só precisa saber entregar o resultado.</p>
+      </div>
+      <div class="op-card">
+        <div class="ic-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg>
+        </div>
+        <h3>A margem é absurda</h3>
+        <p>O material de um serviço custa centavos. Você cobra a partir de R$150. Poucos negócios devolvem tanto em cima de tão pouco.</p>
+      </div>
+      <div class="op-card">
+        <div class="ic-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+        </div>
+        <h3>Não precisa esperar</h3>
+        <p>Sem oficina alugada, sem estoque, sem curso de mil horas. Assiste hoje, separa o material e já pode atender o primeiro carro nesta semana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== A CONTA (MARGEM) ===================== -->
+<section class="section section-light">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">A conta na ponta do lápis</span>
+      <h2 class="h2">Veja por que esse é o <span class="highlight">melhor primeiro serviço</span> pra quem quer começar</h2>
+      <p class="lead">Não tem mágica nem promessa de ficar rico. É matemática simples de um serviço que dá lucro de verdade.</p>
+    </div>
+
+    <div class="math">
+      <div class="math-row">
+        <div class="lbl">Material por carro<small>lixas, produtos e proteção, rateados</small></div>
+        <div class="val val-out">~ R$ 18</div>
+      </div>
+      <div class="math-row">
+        <div class="lbl">Seu tempo no serviço<small>cerca de 40 minutos por carro</small></div>
+        <div class="val val-out">40 min</div>
+      </div>
+      <div class="math-row">
+        <div class="lbl">Quanto se cobra por carro<small>preço médio praticado no mercado</small></div>
+        <div class="val val-in">R$ 150 a R$ 400</div>
+      </div>
+      <div class="math-total">
+        <div class="lbl">Fazendo 2 carros por semana</div>
+        <div class="val">R$ 2.400/mês</div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top:36px">
+      <a href="#oferta" class="cta cta-lg">QUERO APRENDER A FAZER ISSO →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MÓDULOS ===================== -->
+<section class="section section-light" style="background:#fff">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">O que tem por dentro</span>
+      <h2 class="h2">Do material ao <span class="highlight">primeiro cliente pagando</span></h2>
+      <p class="lead">São aulas curtas e direto ao ponto. Você assiste pelo celular com a mão na peça, vai fazendo junto e aprende fazendo.</p>
+    </div>
+    <div class="modules">
+      <div class="module">
+        <div class="n">1</div>
+        <div>
+          <h3>O kit certo, sem gastar à toa</h3>
+          <p>Os poucos itens que realmente importam e onde achar barato. Esqueça aquele produto caro que vendem por aí e não muda nada no resultado.</p>
+        </div>
+      </div>
+      <div class="module">
+        <div class="n">2</div>
+        <div>
+          <h3>Preparação que evita dor de cabeça</h3>
+          <p>O passo que quase todo mundo pula e que é o que separa um farol perfeito de um trabalho manchado que você teria que refazer.</p>
+        </div>
+      </div>
+      <div class="module">
+        <div class="n">3</div>
+        <div>
+          <h3>O lixamento na ordem certa</h3>
+          <p>A sequência que tira o amarelado por inteiro sem arranhar nem deformar a peça. É aqui que a maioria erra sozinho, e você não vai errar.</p>
+        </div>
+      </div>
+      <div class="module">
+        <div class="n">4</div>
+        <div>
+          <h3>O acabamento que vende</h3>
+          <p>Como devolver a transparência e aquele brilho de vitrine. É esse "antes e depois" que faz o cliente te indicar pros amigos.</p>
+        </div>
+      </div>
+      <div class="module">
+        <div class="n">5</div>
+        <div>
+          <h3>A proteção que faz durar</h3>
+          <p>O selante final que segura o resultado por muito mais tempo. Cliente satisfeito não reclama, volta e ainda traz outro.</p>
+        </div>
+      </div>
+      <div class="module">
+        <div class="n">6</div>
+        <div>
+          <h3>Conseguindo os primeiros clientes</h3>
+          <p>Como cobrar, o que falar e onde achar gente precisando do serviço já nesta semana, mesmo que você não conheça ninguém da área.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARA QUEM É ===================== -->
+<section class="section section-light">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Isso é pra você?</span>
+      <h2 class="h2">Sincero: <span class="highlight">não é pra todo mundo</span></h2>
+    </div>
+    <div class="who">
+      <div class="who-card">
+        <h3><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Faz sentido se você…</h3>
+        <ul class="who-list">
+          <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Quer uma renda extra sem depender de patrão nem de horário</li>
+          <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Tá cansado de procurar "bico" e nunca achar nada que renda de verdade</li>
+          <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Já trabalha com lava-rápido ou estética e quer somar mais um serviço</li>
+          <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Não tem grana pra investir alto pra começar algo</li>
+          <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Topa seguir um passo a passo e botar a mão na massa</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <h3><svg class="mk mk-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Melhor nem entrar se você…</h3>
+        <ul class="who-list">
+          <li><svg class="mk mk-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Procura dinheiro fácil sem precisar fazer nada</li>
+          <li><svg class="mk mk-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Não está disposto a separar uma tarde pra praticar e pegar a mão</li>
+          <li><svg class="mk mk-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Acha que vai ficar rico da noite pro dia</li>
+          <li><svg class="mk mk-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg> Desiste de tudo no primeiro carro que não sai perfeito</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BÔNUS ===================== -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Você ainda leva junto</span>
+      <h2 class="h2">3 bônus pra você <span class="highlight">sair atendendo mais rápido</span></h2>
+      <p class="lead">Já inclusos hoje, sem custo nenhum, junto com o acesso vitalício.</p>
+    </div>
+    <div class="bonus">
+      <div class="bonus-card">
+        <span class="bonus-tag">Bônus 1</span>
+        <h3>Lista de material com links</h3>
+        <p>Tudo que você precisa comprar e onde sai mais em conta. Chega, segue a lista e já começa sem ficar perdido na loja.</p>
+        <div class="val">Valor: R$47</div>
+      </div>
+      <div class="bonus-card">
+        <span class="bonus-tag">Bônus 2</span>
+        <h3>Kit pra fechar clientes</h3>
+        <p>Tabela de preço, o que mandar no WhatsApp e um plano simples pra conseguir os 5 primeiros carros ainda nesta semana.</p>
+        <div class="val">Valor: R$67</div>
+      </div>
+      <div class="bonus-card">
+        <span class="bonus-tag">Bônus 3</span>
+        <h3>Indo além do farol</h3>
+        <p>Aula extra pra lanterna, farol de moto e plástico do parachoque. Mais serviço pra oferecer e mais dinheiro do mesmo cliente.</p>
+        <div class="val">Valor: R$37</div>
+      </div>
+    </div>
+    <div class="text-center" style="margin-top:40px">
+      <a href="#oferta" class="cta cta-lg">QUERO O CURSO E OS BÔNUS →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DEPOIMENTOS ===================== -->
+<section class="section section-light" style="background:#fff">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Quem começou, conta como foi</span>
+      <h2 class="h2">Gente comum que já tá <span class="highlight">colocando dinheiro no bolso</span></h2>
+      <div class="stars" style="margin-top:10px">
+        <span class="icons" aria-hidden="true">★★★★★</span>
+        <span class="label">4,9 de 5 em centenas de avaliações</span>
+      </div>
+    </div>
+    <div class="reviews">
+      <div class="review">
+        <span class="icons" style="color:var(--brand-star)" aria-hidden="true">★★★★★</span>
+        <p>"Fiz o primeiro carro no domingo, cobrei R$180 e o curso já tinha se pago. Hoje fecho de 3 a 4 por fim de semana e isso virou minha grana extra fixa."</p>
+        <div class="who-line">
+          <div class="avatar">CR</div>
+          <div class="meta"><strong>Carlos Renato</strong><span>Guarulhos, SP</span></div>
+        </div>
+      </div>
+      <div class="review">
+        <span class="icons" style="color:var(--brand-star)" aria-hidden="true">★★★★★</span>
+        <p>"Eu tava desempregada e sem saber o que fazer. Comecei oferecendo pros vizinhos e hoje tenho clientes que me chamam toda semana. Mudou meu mês."</p>
+        <div class="who-line">
+          <div class="avatar">JP</div>
+          <div class="meta"><strong>Juliana Pires</strong><span>Contagem, MG</span></div>
+        </div>
+      </div>
+      <div class="review">
+        <span class="icons" style="color:var(--brand-star)" aria-hidden="true">★★★★★</span>
+        <p>"Já tenho lava-rápido e botei a restauração de farol como serviço novo. Cliente que vinha só lavar agora deixa mais R$150. Foi a melhor adição que fiz."</p>
+        <div class="who-line">
+          <div class="avatar">MA</div>
+          <div class="meta"><strong>Marcos Almeida</strong><span>Curitiba, PR</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OFERTA ===================== -->
+<section class="section section-darkest" id="oferta">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Oferta de lançamento</span>
+      <h2 class="h2">Comece hoje por <span class="highlight">menos que um lanche</span></h2>
+      <p class="lead">Você devolve esse valor já no primeiro carro que atender. O acesso é na hora e fica seu pra sempre.</p>
+    </div>
+
+    <div class="offer-card">
+      <span class="ribbon">Preço promocional de lançamento</span>
+      <ul class="offer-includes">
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Curso completo Faróis Como Novos, com os 6 módulos em vídeo</li>
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Bônus 1 — Lista de material com links</li>
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Bônus 2 — Kit pra fechar clientes</li>
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Bônus 3 — Indo além do farol</li>
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Acesso vitalício e atualizações sem pagar mais</li>
+        <li><svg class="mk mk-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Garantia de 7 dias, risco zero pra você</li>
+      </ul>
+
+      <div class="price-from">De <s>R$197</s> por apenas:</div>
+      <div class="price-big"><span class="currency">R$</span>19<span class="cents">,90</span></div>
+      <div class="price-installment">à vista no Pix ou em até 3x no cartão</div>
+
+      <a href="#" class="cta cta-lg pulse" style="margin:0 auto;">QUERO GARANTIR MINHA VAGA →</a>
+      <div class="cta-sub" style="color:var(--brand-text-secondary-dark)">Pagamento seguro. Acesso liberado na hora.</div>
+
+      <div class="secure-row">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Compra segura</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg> Acesso imediato</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Garantia de 7 dias</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GARANTIA ===================== -->
+<section class="section section-light">
+  <div class="container">
+    <div class="guarantee">
+      <div class="seal">
+        <div><div class="big">7</div><div class="small">dias de garantia</div></div>
+      </div>
+      <div>
+        <h3>O risco é todo nosso, não seu</h3>
+        <p>Entra, assiste tudo e testa no primeiro farol. Se em 7 dias você sentir que não foi pra você, manda um e-mail e devolvemos cada centavo. Sem ficar perguntando o porquê, sem enrolação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section section-light" style="background:#fff">
+  <div class="container">
+    <div class="sec-head text-center">
+      <span class="eyebrow">Ficou alguma dúvida?</span>
+      <h2 class="h2">As perguntas que mais chegam</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Nunca mexi com isso. Vou dar conta? <span class="plus">+</span></summary>
+        <p>Vai. O curso foi pensado pra quem está começando do zero. As aulas mostram tudo de pertinho e você vai fazendo junto. Se sabe segurar uma esponja e tem um pouco de paciência, consegue.</p>
+      </details>
+      <details>
+        <summary>Quanto preciso gastar pra começar? <span class="plus">+</span></summary>
+        <p>Menos de R$200 num kit que rende vários carros. São itens comuns de loja de autopeças ou ferragem. A lista pronta, com onde comprar mais barato, vem no Bônus 1.</p>
+      </details>
+      <details>
+        <summary>Em quanto tempo eu recupero o que paguei? <span class="plus">+</span></summary>
+        <p>Como o serviço se cobra a partir de R$150 e o curso sai por R$19,90, normalmente o primeiro carro já cobre tudo. O resto é lucro. Mas isso depende de você ir atrás dos clientes, claro.</p>
+      </details>
+      <details>
+        <summary>Funciona pra qualquer carro? <span class="plus">+</span></summary>
+        <p>Funciona em farol de qualquer marca ou ano. E no Bônus 3 você ainda aprende a fazer em lanterna, farol de moto e plástico de parachoque, pra oferecer mais serviços.</p>
+      </details>
+      <details>
+        <summary>Como recebo o acesso? <span class="plus">+</span></summary>
+        <p>Assim que o pagamento cai (no Pix é na hora), você recebe o acesso por e-mail e já pode assistir no celular ou no computador, quantas vezes quiser.</p>
+      </details>
+      <details>
+        <summary>E se eu não gostar? <span class="plus">+</span></summary>
+        <p>Você tem 7 dias de garantia. Se achar que não era pra você, devolvemos tudo, sem perguntas. Você não corre risco nenhum em testar.</p>
+      </details>
+    </div>
+    <div class="text-center" style="margin-top:40px">
+      <a href="#oferta" class="cta cta-lg">SIM, QUERO COMEÇAR POR R$19,90 →</a>
+      <div class="cta-sub">Acesso imediato. Garantia de 7 dias.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="brand">Garagem<span>Detail</span></div>
+    <p>O Faróis Como Novos é um curso de cuidados automotivos com foco em renda extra. Os resultados variam conforme o estado da peça, o material usado e, principalmente, a dedicação de cada aluno em praticar e ir atrás dos clientes. Não prometemos ganho garantido: o quanto você fatura depende do seu esforço.</p>
+    <p>Este site não tem vínculo com nenhuma rede social, plataforma de pagamento ou fabricante de veículos.</p>
+    <hr />
+    <p>
+      <a href="#">Termos de Uso</a> &nbsp;•&nbsp;
+      <a href="#">Política de Privacidade</a> &nbsp;•&nbsp;
+      <a href="#">Contato e Suporte</a>
+    </p>
+    <p>© 2026 Garagem Detail. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
