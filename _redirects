@@ -1,0 +1,4 @@
+# Slug da landing — serve a index.html em /farolzerokm sem trocar a URL (rewrite 200).
+# Mantém o tracking funcionando (rotas /tracker, /checkout-session são absolutas).
+/farolzerokm     /index.html   200
+/farolzerokm/    /index.html   200
