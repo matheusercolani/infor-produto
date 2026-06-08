@@ -8,6 +8,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- ============================================================
+     TRACKING — Meta Pixel + GA4 + conversão server-side (krob stack)
+     EDITE OS IDs ABAIXO antes de publicar:
+       • META_PIXEL_ID   → ID numérico do seu Pixel da Meta
+       • G-XXXXXXXXXX     → seu GA4 Measurement ID (ou remova os 2 blocos GA4)
+     ============================================================ -->
+
+<!-- GA4 (via proxy first-party /scripts/gtag.js) -->
+<script async src="/scripts/gtag.js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX'); // ← seu GA4 Measurement ID
+</script>
+
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1507692817503593'); // Pixel ID — Faróis Como Novos
+
+  // PageView com dedup pixel + CAPI (mesmo event_id). /tracker não grava
+  // PageView no D1, só dispara a Meta CAPI server-side.
+  (function () {
+    var pvEventId = (crypto.randomUUID && crypto.randomUUID()) ||
+      (Date.now() + '-' + Math.random().toString(36).slice(2));
+    fbq('track', 'PageView', {}, { eventID: pvEventId });
+    fetch('/tracker', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: 'PageView',
+        event_id: pvEventId,
+        event_time: Math.floor(Date.now() / 1000),
+        event_source_url: window.location.href,
+        user_data: {},
+      }),
+    }).catch(function () {});
+  })();
+</script>
+
 <style>
   /* ============================================================
      DESIGN TOKENS — Garagem Detail / Faróis Como Novos
@@ -561,7 +608,7 @@
       <div class="price-big"><span class="currency">R$</span>19<span class="cents">,90</span></div>
       <div class="price-installment">à vista no Pix ou em até 3x no cartão</div>
 
-      <a href="#" class="cta cta-lg pulse" style="margin:0 auto;">QUERO GARANTIR MINHA VAGA →</a>
+      <a id="checkout-btn" href="#" class="cta cta-lg pulse" style="margin:0 auto;">QUERO GARANTIR MINHA VAGA →</a>
       <div class="cta-sub" style="color:var(--brand-text-secondary-dark)">Pagamento seguro. Acesso liberado na hora.</div>
 
       <div class="secure-row">
@@ -643,6 +690,99 @@
     <p>© 2026 Garagem Detail. Todos os direitos reservados.</p>
   </div>
 </footer>
+
+<!-- ============================================================
+     WIRING DE ATRIBUIÇÃO — trk → /checkout-session → InitiateCheckout
+     Configurado para KIWIFY. EDITE o CHECKOUT_URL abaixo.
+     ============================================================ -->
+<script>
+(function () {
+  // ===================================================================
+  // CONFIGURAÇÃO — edite antes de publicar.
+  // ===================================================================
+
+  // URL real do checkout que a Kiwify te deu pro produto (R$19,90).
+  const CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_CODIGO_AQUI';
+
+  // Plataforma do checkout. Define qual parâmetro carrega o `trk`:
+  //   'eduzz' → ?trk= | 'hotmart' → ?xcod= | 'kiwify' → ?sck=
+  const CHECKOUT_PLATFORM = 'kiwify';
+
+  // ===================================================================
+  // Daqui pra baixo é a mecânica de atribuição — normalmente não mexa.
+  // ===================================================================
+  const TRK_FIELD_BY_PLATFORM = { eduzz: 'trk', hotmart: 'xcod', kiwify: 'sck' };
+
+  const STORAGE_KEY = 'krob_trk';
+  let trk = sessionStorage.getItem(STORAGE_KEY);
+  if (!trk) { trk = crypto.randomUUID(); sessionStorage.setItem(STORAGE_KEY, trk); }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmSource   = urlParams.get('utm_source')   || '';
+  const utmMedium   = urlParams.get('utm_medium')   || '';
+  const utmCampaign = urlParams.get('utm_campaign') || '';
+  const utmContent  = urlParams.get('utm_content')  || '';
+  const utmTerm     = urlParams.get('utm_term')     || '';
+
+  function fireInitiateCheckout() {
+    const eventId = crypto.randomUUID();
+    const eventTime = Math.floor(Date.now() / 1000);
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', {}, { eventID: eventId }); } catch (_) {}
+    try {
+      const payload = JSON.stringify({
+        event_name: 'InitiateCheckout', event_id: eventId, event_time: eventTime,
+        event_source_url: window.location.href, user_data: {},
+      });
+      navigator.sendBeacon('/tracker', new Blob([payload], { type: 'application/json' }));
+    } catch (_) {}
+  }
+
+  async function persistCheckoutSession() {
+    try {
+      await fetch('/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          trk, utm_source: utmSource, utm_medium: utmMedium, utm_campaign: utmCampaign,
+          utm_content: utmContent, utm_term: utmTerm, event_source_url: window.location.href,
+        }),
+      });
+    } catch (err) { console.warn('checkout-session persist failed:', err); }
+  }
+  persistCheckoutSession();
+
+  // Só o botão de compra do card de oferta (#checkout-btn) dispara o
+  // checkout. Os demais CTAs rolam para #oferta (intencional).
+  const btn = document.getElementById('checkout-btn');
+  if (btn) {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fireInitiateCheckout();
+
+      const paramName = TRK_FIELD_BY_PLATFORM[CHECKOUT_PLATFORM] || 'trk';
+      const params = new URLSearchParams();
+      params.set(paramName, trk);
+
+      if (CHECKOUT_PLATFORM === 'hotmart') {
+        const anyUtm = utmSource || utmMedium || utmCampaign || utmContent || utmTerm;
+        if (anyUtm) {
+          params.set('sck', [utmSource, utmMedium, utmCampaign, utmContent, utmTerm].map(encodeURIComponent).join('|'));
+        }
+      } else {
+        if (utmSource)   params.set('utm_source',   utmSource);
+        if (utmMedium)   params.set('utm_medium',   utmMedium);
+        if (utmCampaign) params.set('utm_campaign', utmCampaign);
+        if (utmContent)  params.set('utm_content',  utmContent);
+        if (utmTerm)     params.set('utm_term',     utmTerm);
+      }
+
+      const separator = CHECKOUT_URL.includes('?') ? '&' : '?';
+      const destination = `${CHECKOUT_URL}${separator}${params.toString()}`;
+      setTimeout(() => { window.location.href = destination; }, 80);
+    });
+  }
+})();
+</script>
 
 </body>
 </html>

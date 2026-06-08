@@ -1,4 +1,27 @@
+# Docs operacionais (não fazem parte do site)
 add-cloudflare-account.md
 setup-github-cloudflare.md
+
+# Segredos e config local — NUNCA commitar
+wrangler.toml
+wrangler.toml.audit
+.dev.vars
+.env
+.env.*
+
+# Artefatos de build do Cloudflare
+.wrangler/
+.cloudflare/
+
+# OS / editor
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
