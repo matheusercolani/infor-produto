@@ -18,6 +18,36 @@
        • G-XXXXXXXXXX     → seu GA4 Measurement ID (ou remova os 2 blocos GA4)
      ============================================================ -->
 
+<!-- Captura resiliente de fbp/fbc — maximiza a cobertura do fbc enviado à CAPI -->
+<script>
+  window.__krobFb = (function () {
+    function ck(n){ return (document.cookie.match('(^|; )' + n + '=([^;]*)') || [])[2] || ''; }
+    function qp(n){ try { return new URLSearchParams(location.search).get(n) || ''; } catch(e){ return ''; } }
+    function subIdx(){
+      var h = location.hostname.toLowerCase().split('.');
+      var l2 = h.slice(-2).join('.');
+      var cc = ['com.br','com.ar','com.mx','com.co','com.pe','com.pt','com.au','co.uk','co.jp','co.nz','co.za'];
+      return (h.length >= 3 && cc.indexOf(l2) > -1) ? 2 : 1;
+    }
+    var fbp = ck('_fbp');
+    var fbc = ck('_fbc');
+    var fbclid = qp('fbclid');
+    try {
+      if (fbclid) localStorage.setItem('_krob_fbclid', fbclid);
+      else { var s = localStorage.getItem('_krob_fbclid'); if (s) fbclid = s; }
+    } catch (e) {}
+    // Sem _fbc mas com fbclid → constrói no formato Meta e persiste o cookie.
+    if (!fbc && fbclid) {
+      fbc = 'fb.' + subIdx() + '.' + Date.now() + '.' + fbclid;
+      try { document.cookie = '_fbc=' + fbc + '; Path=/; Max-Age=34560000; SameSite=Lax; Secure'; } catch (e) {}
+    }
+    return {
+      fbp: fbp, fbc: fbc, fbclid: fbclid,
+      ud: function(){ var o = {}; if (fbp) o.fbp = fbp; if (fbc) o.fbc = fbc; return o; }
+    };
+  })();
+</script>
+
 <!-- GA4 (via proxy first-party /scripts/gtag.js) -->
 <script async src="/scripts/gtag.js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -51,7 +81,7 @@
         event_id: pvEventId,
         event_time: Math.floor(Date.now() / 1000),
         event_source_url: window.location.href,
-        user_data: {},
+        user_data: (window.__krobFb && window.__krobFb.ud()) || {},
       }),
     }).catch(function () {});
   })();
@@ -728,7 +758,7 @@
     try {
       const payload = JSON.stringify({
         event_name: 'InitiateCheckout', event_id: eventId, event_time: eventTime,
-        event_source_url: window.location.href, user_data: {},
+        event_source_url: window.location.href, user_data: (window.__krobFb && window.__krobFb.ud()) || {},
       });
       navigator.sendBeacon('/tracker', new Blob([payload], { type: 'application/json' }));
     } catch (_) {}
@@ -742,6 +772,8 @@
         body: JSON.stringify({
           trk, utm_source: utmSource, utm_medium: utmMedium, utm_campaign: utmCampaign,
           utm_content: utmContent, utm_term: utmTerm, event_source_url: window.location.href,
+          fbp: (window.__krobFb && window.__krobFb.fbp) || '',
+          fbc: (window.__krobFb && window.__krobFb.fbc) || '',
         }),
       });
     } catch (err) { console.warn('checkout-session persist failed:', err); }
